@@ -1,3 +1,0 @@
-Extract Feature Num: 20
-best_topN: 5
-best acc:1.0
