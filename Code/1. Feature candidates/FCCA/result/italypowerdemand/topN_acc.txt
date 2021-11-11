@@ -1,0 +1,3 @@
+Extract Feature Num: 36
+best_topN: 20
+best acc:1.0

@@ -1,0 +1,3 @@
+SFAfeature个数：7
+SAXfeature个数：11
+RISEfeature个数：2
