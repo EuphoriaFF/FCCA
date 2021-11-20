@@ -53,8 +53,7 @@ def cal_dis_between_clusters(dist_cluster_origin, cluster1, cluster2):
 
 def calDsitance_SFA(sfa_feature1, sfa_feature2):
     dis = 0
-
-    # 1. 计算SFA word之间生成的距离
+    
     sfa_word1 = sfa_feature1[7]
     sfa_word2 = sfa_feature2[7]
 
@@ -66,12 +65,11 @@ def calDsitance_SFA(sfa_feature1, sfa_feature2):
 
     dis += sfa_word_dis
 
-    # 3. 来源时间序列的长度
     len1 = int(sfa_feature1[8])
     len2 = int(sfa_feature2[8])
     len_max = max(len1, len2)
     len_min = min(len1, len2)
-    len_factor = pow(2, log(len_min/len_max))
+    len_factor = log(len_max/len_min)
 
     return dis*len_factor
 
@@ -97,7 +95,6 @@ def calDsitance_SAX(featureX, featureY):
         featureY_origin = featureX_origin
         featureX_origin = tmp
 
-    # featureX_origin一定小于featureY_origin
     offset = len(featureY_origin)-len(featureX_origin) + 1
     dis_min = float('inf')
     for i in range(offset):
@@ -237,7 +234,6 @@ class CureCluster:
     def dist_center(self, clust, dist):
         return dist(self.center, clust.center)
 
-    # Merges this cluster with the given cluster, recomputing the centroid and the representative points.
     def merge_with_cluster(self, clust, dist_cluster_origin):
 
         self.points = np.vstack((self.points, clust.points)).tolist()
@@ -247,7 +243,6 @@ class CureCluster:
         # self.compute_centroid_by_infogainThenPreacc()
 
 class clusterInfo:
-    # 聚类中心，每个聚类中的特征个数，聚类中心信息增益，聚类中心权重
     def __init__(self, centroids, clu_num, centroids_infogain):
         self.centroids = centroids
         self.clu_num = clu_num
@@ -302,7 +297,6 @@ def run_CURE(data, cluster_k, dist, cal_dis_between_clusters):
                                                                    clusters[min_index1])
         dist_cluster[min_index1, min_index1] = inf
 
-        # print("删除聚类：", clusters[min_index2].index)
         # Delete the merged cluster and its disCluster vector.
         dist_cluster = np.delete(dist_cluster, min_index2, axis=0)
         dist_cluster = np.delete(dist_cluster, min_index2, axis=1)
@@ -322,7 +316,7 @@ def run_CURE(data, cluster_k, dist, cal_dis_between_clusters):
     return k_centroids_dict
 
 def predictByCentroids(centroidsInfo, test_df, testdata_size, dataLabel):
-    featureType_dic = []  # 该类特征对每个数据的预测
+    featureType_dic = [] 
     for i in range(testdata_size):
         tmp_dict = {}
         for datalabel in dataLabel:
