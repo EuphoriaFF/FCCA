@@ -71,7 +71,7 @@ def calDsitance_SFA(sfa_feature1, sfa_feature2):
     len2 = int(sfa_feature2[8])
     len_max = max(len1, len2)
     len_min = min(len1, len2)
-    len_factor = pow(2, log(len_min/len_max))
+    len_factor = log(len_max/len_min)
 
     return dis*len_factor
 
